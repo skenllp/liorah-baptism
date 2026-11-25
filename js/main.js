@@ -201,4 +201,33 @@
       if (Math.abs(dx) > 45) show(cur + (dx < 0 ? 1 : -1), true);
     }, { passive: true });
   })();
+
+  /* ---------- 8. Dove: glides down the page with the guest ---------- */
+  (function dove() {
+    if (reduceMotion) return;
+    var el = $("#dove"), turn = el.firstElementChild;
+    var x = -0.3, y = 0.16, px = x, py = y, rot = 0, facing = 1, t0 = performance.now();
+    var COL = 520;
+    function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
+    function frame(now) {
+      var t = (now - t0) / 1000, vw = window.innerWidth, vh = window.innerHeight;
+      var max = Math.max(1, document.documentElement.scrollHeight - vh);
+      var p = clamp(window.scrollY / max, 0, 1);              // 0 (top) → 1 (bottom)
+      // Weaves across the invitation column: scroll sets the course, time keeps it drifting gently.
+      var phase = p * Math.PI * 2 * 3.2 + t * 0.16;
+      var tx = 0.5 + 0.44 * Math.sin(phase) + 0.04 * Math.sin(t * 0.7);
+      var ty = 0.2 + 0.13 * Math.sin(phase * 0.8 + 1) + 0.025 * Math.sin(t * 1.3) + 0.12 * p;
+      x += (tx - x) * 0.012; y += (ty - y) * 0.012;           // eased, inertial flight
+      var vx = x - px, vy = y - py; px = x; py = y;
+      var want = vx >= 0 ? 1 : -1;
+      if (want !== facing && Math.abs(vx) > 0.0004) { facing = want; turn.classList.toggle("is-left", facing < 0); }
+      rot += (clamp(vy * 900, -14, 14) * facing - rot) * 0.06;       // pitch with climb / dive
+      var colW = Math.min(vw, COL), left0 = (vw - colW) / 2, w = el.offsetWidth;
+      var scale = 0.95 + 0.1 * Math.sin(phase * 0.5 + 2);
+      el.style.transform = "translate3d(" + (left0 + x * colW - w / 2).toFixed(1) + "px," + (y * vh).toFixed(1) + "px,0) rotate(" + rot.toFixed(2) + "deg) scale(" + scale.toFixed(3) + ")";
+      requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+    var iv = setInterval(function () { if (!document.body.classList.contains("is-locked")) { el.classList.add("is-on"); clearInterval(iv); } }, 200);
+  })();
 })();

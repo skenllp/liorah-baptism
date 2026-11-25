@@ -176,24 +176,13 @@ body.is-locked .hero .reveal.in { opacity: 0; transform: translateY(18px); }
 .portrait__mono { position: absolute; inset: 0; display: grid; place-items: center; font-family: var(--font-script); font-size: 3.6rem; color: var(--gold); opacity: .8; }
 .portrait.has-photo .portrait__mono { display: none; }
 
-/* ---------- Dove (real wing-beat footage as animated WebP with alpha) ---------- */
-.dove { position: absolute; z-index: 1; top: 1.6rem; left: 0; width: clamp(130px, 38cqw, 190px); pointer-events: none; will-change: transform; transform: translateX(-130%); animation: flyAcross 34s linear 1.2s infinite; }
-.dove__lift { animation: glide 7s ease-in-out infinite; transform-origin: 50% 50%; }
-.dove__img { width: 100%; height: auto; filter: drop-shadow(0 8px 10px rgba(138,106,53,.2));
-  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 7%); mask-image: linear-gradient(90deg, transparent 0, #000 7%); }
-@keyframes flyAcross {
-  0%   { transform: translateX(-130%) scale(.85); opacity: 0; }
-  3%   { opacity: 1; }
-  38%  { transform: translateX(calc(100cqw + 30%)) scale(1.05); opacity: 1; }
-  40%  { opacity: 0; }
-  100% { transform: translateX(calc(100cqw + 30%)) scale(1.05); opacity: 0; }
-}
-@keyframes glide {
-  0%, 100% { transform: translateY(0) rotate(-4deg); }
-  25%      { transform: translateY(-14px) rotate(-1deg); }
-  50%      { transform: translateY(8px) rotate(2deg); }
-  75%      { transform: translateY(26px) rotate(-1deg); }
-}
+/* ---------- Dove (real wing-beat footage as animated WebP with alpha; position driven by js/main.js) ---------- */
+.dove { position: fixed; z-index: 1; top: 0; left: 0; width: clamp(120px, 34vw, 170px); pointer-events: none; opacity: 0; transition: opacity 1.6s ease; will-change: transform; }
+.dove.is-on { opacity: .97; }
+body.is-locked .dove { opacity: 0; }
+.dove__turn { transition: transform .9s cubic-bezier(.45,0,.2,1); }
+.dove__turn.is-left { transform: scaleX(-1); }
+.dove__img { width: 100%; height: auto; filter: drop-shadow(0 8px 10px rgba(138,106,53,.2)); }
 
 /* ---------- Blessing ---------- */
 .blessing { background: linear-gradient(180deg, #fbf5e6, #f8efd9); }
@@ -258,4 +247,3 @@ body.is-locked .hero .reveal.in { opacity: 0; transform: translateY(18px); }
 }
 
 /* Dove waits for the invitation to open */
-body.is-locked .dove, body.is-locked .dove__lift { animation-play-state: paused; }
