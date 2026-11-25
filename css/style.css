@@ -51,7 +51,7 @@ body::before {
 
 /* ---------- Shared bits ---------- */
 .section {
-  position: relative; min-height: 100svh; display: grid; place-items: center;
+  position: relative; min-height: 100vh; min-height: 100svh; display: grid; place-items: center;
   padding: var(--space-5) var(--space-3); text-align: center; overflow: hidden;
   background-size: cover; background-position: center bottom; background-repeat: no-repeat;
 }
@@ -107,7 +107,7 @@ body.is-locked .hero .reveal.in { opacity: 0; transform: translateY(18px); }
   transition: opacity 1.4s ease, visibility 1.4s;
 }
 .intro.is-leaving { opacity: 0; visibility: hidden; }
-.intro__stage { position: relative; width: min(100vw, 56.25svh); height: 100svh; overflow: hidden; background: #f1e2bd; }
+.intro__stage { position: relative; width: min(100vw, 56.25vh); width: min(100vw, 56.25svh); height: 100vh; height: 100svh; overflow: hidden; background: #f1e2bd; }
 .intro__video { width: 100%; height: 100%; object-fit: cover; }
 .intro__start {
   position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center;
@@ -177,7 +177,7 @@ body.is-locked .hero .reveal.in { opacity: 0; transform: translateY(18px); }
 .portrait.has-photo .portrait__mono { display: none; }
 
 /* ---------- Dove (real wing-beat footage as animated WebP with alpha; position driven by js/main.js) ---------- */
-.dove { position: fixed; z-index: 1; top: 0; left: 0; width: clamp(120px, 34vw, 170px); pointer-events: none; opacity: 0; transition: opacity 1.6s ease; will-change: transform; }
+.dove { position: fixed; z-index: 1; top: 0; left: 0; width: clamp(96px, 29vw, 160px); pointer-events: none; opacity: 0; transition: opacity 1.6s ease; will-change: transform; }
 .dove.is-on { opacity: .97; }
 body.is-locked .dove { opacity: 0; }
 .dove__turn { transition: transform .9s cubic-bezier(.45,0,.2,1); }
@@ -247,3 +247,27 @@ body.is-locked .dove { opacity: 0; }
 }
 
 /* Dove waits for the invitation to open */
+
+/* ---------- Mobile optimisation ---------- */
+@media (max-width: 699px) {
+  body::before { display: none; }                      /* the blurred desktop backdrop isn't needed on phones */
+  .section { padding-inline: 1.25rem; }
+  .btn { width: min(100%, 17rem); }
+  .actions { gap: .7rem; }
+  .gallery__grid { column-gap: .65rem; }
+  .gallery__item { margin-bottom: .65rem; }
+}
+@media (max-width: 360px) {
+  body { font-size: 1.08rem; }
+  .btn { letter-spacing: .14em; font-size: .88rem; }
+  .title-caps { letter-spacing: .22em; font-size: 1.05rem; }
+  .label { letter-spacing: .24em; }
+}
+@media (max-height: 640px) {
+  .section { padding-block: 3rem; }
+  .hero { padding-top: 3.8rem; padding-bottom: 8rem; }
+  .portrait--arch { width: min(40vw, 9.5rem); }
+  .lead { font-size: 1.1rem; }
+}
+@media (hover: none) { .btn:hover { transform: none; box-shadow: 0 6px 18px rgba(138,106,53,.28); } .gallery__item:hover { box-shadow: 0 8px 22px rgba(138,106,53,.18), 0 0 0 1px rgba(184,147,90,.3); } }
+@supports (padding: max(0px)) { .site { padding-bottom: env(safe-area-inset-bottom); } }

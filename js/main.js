@@ -70,7 +70,7 @@
   audio.src = C.music.src; audio.volume = C.music.volume;
   musicOK = true; musicBtn.hidden = false;
   audio.addEventListener("error", function () { musicOK = false; musicBtn.hidden = true; });
-  audio.preload = "auto";
+  audio.preload = "metadata";   // full file downloads on the first tap
 
   function setMusicUI(on) {
     musicBtn.setAttribute("aria-pressed", String(on));
@@ -127,15 +127,16 @@
   function probe(p, i) {
     return new Promise(function (res) {
       var im = new Image(); im.decoding = "async";
-      im.onload = function () { res({ src: p.src, alt: p.alt, fx: p.focusX, fy: p.focusY, w: im.naturalWidth, h: im.naturalHeight, i: i }); };
-      im.onerror = function () { res(null); };
-      im.src = p.src;
+      var thumb = p.src.replace(/\.(\w+)$/, "-sm.$1"), triedFull = false;   // small copy for the page, full size for the lightbox
+      im.onload = function () { res({ src: p.src, thumb: triedFull ? p.src : thumb, alt: p.alt, fx: p.focusX, fy: p.focusY, w: im.naturalWidth, h: im.naturalHeight, i: i }); };
+      im.onerror = function () { if (!triedFull) { triedFull = true; im.src = p.src; } else res(null); };
+      im.src = thumb;
     });
   }
   function fillPortrait(fig, photo) {
     if (!photo) return;
     var img = document.createElement("img");
-    img.alt = photo.alt; img.src = photo.src; if (photo.fx) fig.style.setProperty("--fx", photo.fx); if (photo.fy) fig.style.setProperty("--fy", photo.fy); img.decoding = "async"; img.width = photo.w; img.height = photo.h;
+    img.alt = photo.alt; img.src = photo.thumb; if (photo.fx) fig.style.setProperty("--fx", photo.fx); if (photo.fy) fig.style.setProperty("--fy", photo.fy); img.decoding = "async"; img.width = photo.w; img.height = photo.h;
     img.onload = function () { img.classList.add("is-loaded"); fig.classList.add("has-photo"); };
     fig.appendChild(img);
   }
@@ -156,7 +157,7 @@
       b.type = "button"; b.className = "gallery__item"; b.style.setProperty("--d", (idx % 2) * 0.15 + "s");
       b.setAttribute("aria-label", "Open photo " + (idx + 1) + " of " + loaded.length);
       var img = document.createElement("img");
-      img.src = p.src; img.alt = p.alt; img.width = p.w; img.height = p.h; img.loading = "lazy"; img.decoding = "async";
+      img.src = p.thumb; img.alt = p.alt; img.width = p.w; img.height = p.h; img.loading = "lazy"; img.decoding = "async";
       b.appendChild(img);
       b.addEventListener("click", function () { openLightbox(idx, b); });
       grid.appendChild(b); watch(b);
@@ -205,7 +206,7 @@
   /* ---------- 8. Dove: glides down the page with the guest ---------- */
   (function dove() {
     if (reduceMotion) return;
-    var el = $("#dove"), turn = el.firstElementChild;
+    var el = $("#dove"), turn = el.firstElementChild, img = el.querySelector("img");
     var x = -0.3, y = 0.16, px = x, py = y, rot = 0, facing = 1, t0 = performance.now();
     var COL = 520;
     function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
@@ -228,6 +229,6 @@
       requestAnimationFrame(frame);
     }
     requestAnimationFrame(frame);
-    var iv = setInterval(function () { if (!document.body.classList.contains("is-locked")) { el.classList.add("is-on"); clearInterval(iv); } }, 200);
+    var iv = setInterval(function () { if (!document.body.classList.contains("is-locked")) { img.src = img.dataset.src; el.classList.add("is-on"); clearInterval(iv); } }, 200);
   })();
 })();
