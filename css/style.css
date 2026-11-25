@@ -176,19 +176,24 @@ body.is-locked .hero .reveal.in { opacity: 0; transform: translateY(18px); }
 .portrait__mono { position: absolute; inset: 0; display: grid; place-items: center; font-family: var(--font-script); font-size: 3.6rem; color: var(--gold); opacity: .8; }
 .portrait.has-photo .portrait__mono { display: none; }
 
-/* ---------- Dove (transparent PNG, drifts left → right) ---------- */
-.dove { position: absolute; z-index: 1; top: 3.5rem; left: 0; width: clamp(110px, 30cqw, 150px); pointer-events: none; will-change: transform; transform: translateX(-130%); animation: flyAcross 30s linear 1.5s infinite; }
-.dove__lift { animation: bob 4.5s ease-in-out infinite alternate; transform-origin: 50% 60%; }
-.dove__img { width: 100%; height: auto; filter: drop-shadow(0 6px 10px rgba(138,106,53,.22)); animation: flap 1.3s ease-in-out infinite alternate; transform-origin: 50% 60%; }
+/* ---------- Dove (real wing-beat footage as animated WebP with alpha) ---------- */
+.dove { position: absolute; z-index: 1; top: 1.6rem; left: 0; width: clamp(130px, 38cqw, 190px); pointer-events: none; will-change: transform; transform: translateX(-130%); animation: flyAcross 34s linear 1.2s infinite; }
+.dove__lift { animation: glide 7s ease-in-out infinite; transform-origin: 50% 50%; }
+.dove__img { width: 100%; height: auto; filter: drop-shadow(0 8px 10px rgba(138,106,53,.2));
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 7%); mask-image: linear-gradient(90deg, transparent 0, #000 7%); }
 @keyframes flyAcross {
-  0%   { transform: translateX(-130%); opacity: 0; }
-  4%   { opacity: 1; }
-  42%  { transform: translateX(calc(100cqw + 30%)); opacity: 1; }
-  44%  { opacity: 0; }
-  100% { transform: translateX(calc(100cqw + 30%)); opacity: 0; }
+  0%   { transform: translateX(-130%) scale(.85); opacity: 0; }
+  3%   { opacity: 1; }
+  38%  { transform: translateX(calc(100cqw + 30%)) scale(1.05); opacity: 1; }
+  40%  { opacity: 0; }
+  100% { transform: translateX(calc(100cqw + 30%)) scale(1.05); opacity: 0; }
 }
-@keyframes bob { from { transform: translateY(0) rotate(4deg); } to { transform: translateY(28px) rotate(-3deg); } }
-@keyframes flap { from { transform: scale(1, 1); } to { transform: scale(.96, .9); } }
+@keyframes glide {
+  0%, 100% { transform: translateY(0) rotate(-4deg); }
+  25%      { transform: translateY(-14px) rotate(-1deg); }
+  50%      { transform: translateY(8px) rotate(2deg); }
+  75%      { transform: translateY(26px) rotate(-1deg); }
+}
 
 /* ---------- Blessing ---------- */
 .blessing { background: linear-gradient(180deg, #fbf5e6, #f8efd9); }
@@ -253,4 +258,4 @@ body.is-locked .hero .reveal.in { opacity: 0; transform: translateY(18px); }
 }
 
 /* Dove waits for the invitation to open */
-body.is-locked .dove, body.is-locked .dove__lift, body.is-locked .dove__img { animation-play-state: paused; }
+body.is-locked .dove, body.is-locked .dove__lift { animation-play-state: paused; }
