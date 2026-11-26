@@ -28,7 +28,7 @@ assets/
 1. **Map links** → paste Google Maps share links into `ceremony.mapUrl` and `reception.mapUrl` in `js/config.js`. If empty, the buttons open a Google Maps *search* for the venue name.
 2. **WhatsApp preview** → set to https://liorah-baptism-flame.vercel.app (change in `index.html` if the domain changes). WhatsApp caches previews; to refresh, share with `?v=2` on the end.
 
-Photos (`liorah-photo-01..04.webp`) and the song (`instrumental.mp3`) are already in place. Hero = photo 1, closing = photo 2 (`heroPhotoIndex` / `closingPhotoIndex`); `focusX/focusY` keep the face centred in the round/arch frames.
+Photos (`liorah-photo-01..03, 05, 06.webp`) and the song (`instrumental.mp3`) are already in place. Hero = photo 1, closing = photo 2 (`heroPhotoIndex` / `closingPhotoIndex`); `focusX/focusY` keep the face centred in the round/arch frames.
 
 ## Notes
 - Opening: first video frame + highlighted name + **Open Invitation**. The tap plays the curtain video and starts the song (music is never forced; the 🎵 button remembers on/off). When the video ends it fades straight into the invitation; **Skip intro** jumps ahead.

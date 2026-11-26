@@ -271,3 +271,21 @@ body.is-locked .dove { opacity: 0; }
 }
 @media (hover: none) { .btn:hover { transform: none; box-shadow: 0 6px 18px rgba(138,106,53,.28); } .gallery__item:hover { box-shadow: 0 8px 22px rgba(138,106,53,.18), 0 0 0 1px rgba(184,147,90,.3); } }
 @supports (padding: max(0px)) { .site { padding-bottom: env(safe-area-inset-bottom); } }
+
+/* ---------- Scroll-down arrow (hero) ---------- */
+.scrolldown { position: absolute; left: 50%; bottom: max(.9rem, env(safe-area-inset-bottom)); margin-left: -24px; z-index: 2; display: flex; flex-direction: column; align-items: center; gap: .1rem; min-width: 48px; min-height: 48px; justify-content: center; color: var(--gold-deep); text-decoration: none; -webkit-tap-highlight-color: transparent; }
+.scrolldown__text { font-size: .78rem; font-weight: 600; letter-spacing: .3em; text-transform: uppercase; padding-left: .3em; }
+.scrolldown svg { width: 26px; height: 26px; animation: nudge 1.9s ease-in-out infinite; }
+@keyframes nudge { 0%, 100% { transform: translateY(-2px); opacity: .6; } 50% { transform: translateY(6px); opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .scrolldown svg { animation: none; } }
+@media (max-height: 640px) { .scrolldown__text { display: none; } }
+
+@media (max-height: 780px) {
+  .hero { padding-top: 3.8rem; padding-bottom: 6.5rem; }
+  .hero__inner { gap: .6rem; }
+  .portrait--arch { width: min(38vw, 10rem); }
+  .lead { font-size: 1.1rem; line-height: 1.42; }
+  .hero h1 .script { font-size: clamp(2.8rem, 13vw, 3.5rem); }
+}
+.scrolldown { opacity: 0; animation: fadeUp 1.4s var(--ease) 1.6s forwards; }
+body.is-locked .scrolldown { animation-play-state: paused; }

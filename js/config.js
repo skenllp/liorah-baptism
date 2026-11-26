@@ -40,7 +40,8 @@ window.INVITE = {
     { src: "assets/images/liorah-photo-01.webp", alt: "Liorah in pink dungarees and a pink bow", focusX: "50%", focusY: "22%" },
     { src: "assets/images/liorah-photo-02.webp", alt: "Liorah in a floral dress and ivory bow",  focusX: "40%", focusY: "12%" },
     { src: "assets/images/liorah-photo-03.webp", alt: "Liorah in a pumpkin hat, looking up",      focusX: "55%", focusY: "35%" },
-    { src: "assets/images/liorah-photo-04.webp", alt: "Liorah in a pumpkin outfit with a bow",    focusX: "55%", focusY: "35%" }
+    { src: "assets/images/liorah-photo-05.webp", alt: "Liorah in a cream pumpkin-spice sweater",  focusX: "50%", focusY: "25%" },
+    { src: "assets/images/liorah-photo-06.webp", alt: "Liorah smiling in a pink knitted sweater", focusX: "45%", focusY: "28%" }
   ],
   // focusX / focusY = which point of the photo stays centred in the hero/closing frames (face).
   heroPhotoIndex: 0,                // which photo is used in the hero
