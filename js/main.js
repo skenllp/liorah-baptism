@@ -70,13 +70,14 @@
   audio.src = C.music.src; audio.volume = C.music.volume;
   musicOK = true; musicBtn.hidden = false;
   audio.addEventListener("error", function () { musicOK = false; musicBtn.hidden = true; });
-  audio.preload = "metadata";   // full file downloads on the first tap
+  audio.preload = "auto";
 
   function setMusicUI(on) {
     musicBtn.setAttribute("aria-pressed", String(on));
     musicBtn.setAttribute("aria-label", on ? "Pause background music" : "Play background music");
   }
-  function playMusic() {
+  function playMusic(fromStart) {
+    if (fromStart) { try { audio.currentTime = 0; } catch (e) {} }
     var p = audio.play();
     if (p && p.then) p.then(function () { setMusicUI(true); store.set("music", "on"); }).catch(function () { setMusicUI(false); });
     else setMusicUI(true);
@@ -100,7 +101,7 @@
   function begin() {
     if (started) return; started = true;
     // This tap is the user interaction that allows music; skipped only if the guest muted it before.
-    if (musicOK && store.get("music") !== "off") playMusic();
+    if (musicOK) playMusic(true);   // always from the very beginning
     if (reduceMotion) { enter(); return; }
     intro.classList.add("is-playing"); skipBtn.hidden = false;
     var pp = video.play();
