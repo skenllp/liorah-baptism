@@ -17,7 +17,7 @@ window.INVITE = {
     timeLabel: "4:30 PM",
     time24: "16:30",
     durationMin: 90,
-    venue: "St. Thomas Church",
+    venue: "St Joseph's Church",
     place: "Nellimattom",
     /* Paste the church's Google Maps "Share" link between the quotes.
        If left empty, the button opens a Google Maps SEARCH for the venue name. */
