@@ -296,3 +296,9 @@ body.is-locked .scrolldown { animation-play-state: paused; }
 /* ---------- Footer credit ---------- */
 .credit { padding: 1.4rem 1rem calc(1.6rem + env(safe-area-inset-bottom)); text-align: center; background: #f8efd9; font-size: .95rem; letter-spacing: .12em; color: var(--ink-soft); border-top: 1px solid rgba(184,147,90,.25); }
 .credit a { color: var(--gold-deep); font-weight: 600; text-decoration: underline; text-decoration-color: var(--champagne); text-underline-offset: 4px; padding: .5rem .3rem; }
+
+/* ---------- Scroll buttons (sections below the hero) ---------- */
+.section:not(.hero) { padding-bottom: 8.5rem; }
+.scrolldown--section { position: absolute; z-index: 2; left: 0; right: 0; bottom: 1.5rem; width: max-content; margin: 0 auto; }
+.scrolldown--up .scrolldown__ring svg { animation-direction: reverse; }
+@media (max-height: 780px) { .section:not(.hero) { padding-bottom: 6rem; } .scrolldown--section { bottom: 1.1rem; } }

@@ -153,6 +153,7 @@
     if (!loaded.length) return;     // no photos supplied yet → section stays hidden
     var sec = $("#gallery"), grid = $("#galleryGrid");
     sec.hidden = false;
+    $("#blessingNext").href = "#gallery";
     loaded.forEach(function (p, idx) {
       var b = document.createElement("button");
       b.type = "button"; b.className = "gallery__item"; b.style.setProperty("--d", (idx % 2) * 0.15 + "s");
